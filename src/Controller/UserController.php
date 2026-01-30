@@ -64,7 +64,7 @@ class UserController extends AbstractController
             foreach ($errors as $error) {
                 $errorMessages[] = $error->getMessage();
             }
-            return $this->json(['error' => implode(', ', $errorMessages)], Response::HTTP_BAD_REQUEST);
+            return $this->json(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->persist($user);
@@ -126,7 +126,7 @@ class UserController extends AbstractController
             foreach ($errors as $error) {
                 $errorMessages[] = $error->getMessage();
             }
-            return $this->json(['error' => implode(', ', $errorMessages)], Response::HTTP_BAD_REQUEST);
+            return $this->json(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->flush();
