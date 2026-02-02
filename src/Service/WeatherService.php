@@ -70,13 +70,20 @@ class WeatherService
      */
     private function fetchWeatherFromApi(string $city): array
     {
+        $query = [
+            'appid' => $this->apiKey,
+            'units' => 'metric',
+            'lang' => 'en'
+        ];
+
+        if (preg_match('/^\d+$/', $city)) {
+            $query['zip'] = $city . ',FR';
+        } else {
+            $query['q'] = $city;
+        }
+
         $response = $this->httpClient->request('GET', self::API_URL, [
-            'query' => [
-                'q' => $city,
-                'appid' => $this->apiKey,
-                'units' => 'metric',
-                'lang' => 'en'
-            ]
+            'query' => $query
         ]);
 
         $statusCode = $response->getStatusCode();
